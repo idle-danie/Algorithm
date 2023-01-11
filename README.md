@@ -1,2 +1,2 @@
-# Algorithm
-## by python 
+# Algorithm problem solving
+## by Python language

@@ -7,8 +7,11 @@ def solution(nums):
             dic[i]+=1
         else:
             dic[i] = 0
-    kind = len(dic)
-    if nums_pick >= kind:
-        return kind
-    else:
-        return nums_pick
+        count_nums = len(dic)
+        if count_nums >= nums_pick:
+            return nums_pick
+    return count_nums
+
+
+# def solution(nums):
+#     return min(len(nums)/2, len(set(nums)))

@@ -1,9 +1,10 @@
 from collections import deque
-
+import time
+start_time = time.time()
 def solution(people, limit):
     answer = 0
     que = deque(sorted(people, reverse = True))
-    while len(que) > 1: 
+    while len(que) > 1:
         if limit - que.popleft() < que[len(que) - 1]:
             answer+=1
         else:
@@ -13,6 +14,9 @@ def solution(people, limit):
         return answer + 1
     else:
         return answer
+    
+end_time = time.time()
+print("time: ", end_time-start_time)
 
 # def solution(people, limit) :
 #     answer = 0

@@ -6,3 +6,4 @@ def solution(numbers):
     else:   
         answer = ''.join(numbers)
         return answer
+    

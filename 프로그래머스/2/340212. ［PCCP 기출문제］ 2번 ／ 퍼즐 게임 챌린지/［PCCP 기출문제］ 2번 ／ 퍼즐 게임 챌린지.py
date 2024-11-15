@@ -1,72 +1,60 @@
-# def time_to_solve(level, diff, time_cur, time_prev):
-#     # 숙련도가 난이도보다 높을 때
-#     if level >= diff:
-#         return time_cur
-#     # 숙련도가 난이도보다 낮을 때
-#     else:
-#         return (diff - level) * (time_cur + time_prev) + time_cur
+## 적용 알고리즘: 이분탐색
+## 시간복잡도: O(N * log(K))
+
+def time_to_solve(level, diff, time_cur, time_prev):
+    if level >= diff:
+        return time_cur
+    else:
+        return (time_prev + time_cur) * (diff - level) + time_cur
+        
+def solution(diffs, times, limit):
+    min_level, max_level = 1, max(diffs)
+    
+    while min_level < max_level:
+        mid_level = (min_level + max_level) // 2
+        mid_total = 0
+        
+        for i in range(len(diffs)):
+            if i == 0: ## if not i:
+                time_prev = 0
+            else:
+                time_prev = times[i - 1]
+            time_cur = times[i]
+            mid_total += time_to_solve(mid_level, diffs[i], time_cur, time_prev)
+        
+        if mid_total <= limit:
+            max_level = mid_level
+        else:
+            min_level = mid_level + 1
+    return min_level ## return max_level
+
+## 적용 알고리즘: 그리디
+## 시간복잡도: O(N + K)
 
 # def solution(diffs, times, limit):
-#     # 최대 레벨, 최소 레벨을 설정합니다.
-#     max_level, min_level = max(diffs), 1
-
-#     # 최소 레벨이 최대 레벨과 같아질 때까지 반복합니다.
-#     while min_level < max_level:
-#         # 중간 지점을 설정합니다.
-#         mid_level = (min_level + max_level) // 2
-#         mid_total = 0
-
-#         # 모든 난이도에 대해 탐색합니다.
-#         for i in range(len(diffs)):
-#             # 처음 위치에만 time_prev가 0
-#             if not i:
-#                 time_prev = 0
-#             else:
-#                 time_prev = times[i - 1]
-
-#             # 현재 문제에 필요한 시간
-#             time_cur = times[i]
-#             mid_total += time_to_solve(mid_level, diffs[i], time_cur, time_prev)
-
-#         # 중간 레벨이 제한 시간 내에 문제를 풀 수 있다면
-#         # 최댓값을 내려줍니다.
-#         if mid_total <= limit:
-#             max_level = mid_level
-#         # 제한 시간 내에 문제를 풀 수 없다면
-#         # 최솟값을 올려줍니다.
+#     min_level = 0
+#     dict_diffs = {}
+#     for i in range(len(diffs)):
+#         if i == 0: ## if not i:
+#             try :
+#                 dict_diffs[diffs[i]] += times[i]
+#             except KeyError: 
+#                 dict_diffs[diffs[i]] = times[i]
 #         else:
-#             min_level = mid_level + 1
+#             try :
+#                 dict_diffs[diffs[i]] += times[i] + times[i - 1]
+#             except KeyError: 
+#                 dict_diffs[diffs[i]] = times[i] + times[i - 1]
 
-#     # 최소 레벨을 반환합니다.
+#     curr_level = max(diffs)
+#     curr_times = sum(times)
+#     sum_times = 0
+
+#     while curr_times <= limit and curr_level > 0:
+#         if curr_level in dict_diffs:
+#             sum_times += dict_diffs[curr_level]
+#         curr_level -= 1
+#         curr_times += sum_times
+
+#     min_level = curr_level + 1
 #     return min_level
-
-
-def solution(diffs, times, limit):
-    answer = 0
-    diffsDict={}
-    for i in range(len(diffs)):
-        if i==0:
-            try :
-                diffsDict[diffs[i]]+=times[i]
-            except KeyError: 
-                diffsDict[diffs[i]]=times[i]
-        else:
-            try :
-                diffsDict[diffs[i]]+=times[i]+times[i-1]
-            except KeyError: 
-                diffsDict[diffs[i]]=times[i]+times[i-1]
-
-
-    nowLevel=max(diffs)
-    nowTime=sum(times)
-
-    sumTimes=0
-
-    while nowTime <= limit and nowLevel>0:
-        if nowLevel in diffsDict:
-            sumTimes+=diffsDict[nowLevel]
-        nowLevel-=1
-        nowTime+=sumTimes
-
-    answer=nowLevel+1
-    return answer

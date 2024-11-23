@@ -43,3 +43,25 @@ def solution(points, routes):
             result += 1
     
     return result
+
+# from collections import Counter
+
+# def solution(points, routes): 
+#     time_map = Counter()  
+#     result = 0
+    
+#     for route in routes:
+#         full_path = []
+#         full_path.append(points[route[0] - 1])
+        
+#         for i in range(len(route) - 1):
+#             start_pos, end_pos = points[route[i] - 1], points[route[i + 1] - 1]
+#             full_path.extend(write_move_path(start_pos, end_pos))
+        
+#         time_map.update((time, tuple(position)) for time, position in enumerate(full_path))
+
+#     for count in time_map.values():
+#         if count > 1:  
+#             result += 1
+
+#     return result

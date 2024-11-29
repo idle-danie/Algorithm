@@ -1,7 +1,7 @@
 import heapq
 
 def solution(scoville, K):
-    heapq.heapify(scoville) ## O(NlogN)
+    scovile = heapq.heapify(scoville) ## O(NlogN)
     cnt = 0
     
     while True:
